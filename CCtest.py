@@ -9,17 +9,17 @@ import matplotlib.cm as cm
 import random
 plt.ion()
 
-name = "imgs/00exp__Linear"
-data: np.ndarray = getHelicalPath()[:, :2] * 2
+name = "imgs/00exp__Log"
+data: np.ndarray = getZigZag()[:, :2]
 locking = True
 ret, (fig, ax) = plot_2d(data, plotfn= "line", suppress = True)
 plt.show(block = False)
 Drone = DroneProf()
-Drone.setPos(np.array([5, 0]))
+Drone.setPos(np.array([0, 0]))
 prev = Drone.pos
 velocityprofiler = VelocityProfile(distance = 1, c= 0.5, v_max = 5, v_min=0.5)
 # velocityprofiler(np.pi / 2, 10)
-CC = CarrotChasing(vel = velocityprofiler, delta = 2, locking = locking)
+CC = CarrotChasing(vel = velocityprofiler, delta = 1, locking = locking)
 prevWP = 0
 nextWP = 1
 timeDelta = 0.15
@@ -58,12 +58,12 @@ while True:
 
 plt.savefig(f"{name}_1.jpeg")
 plt.clf()
-plt.plot(np.linalg.norm(velocities, axis = 1))
+plt.plot(np.linspace(0, iteration * timeDelta, len(velocities)), np.linalg.norm(velocities, axis = 1))
 plt.savefig(f"{name}_2.jpeg")
 plt.clf()
-plt.plot(np.linalg.norm(accs, axis = 1))
+plt.plot(np.linspace(0, iteration * timeDelta, len(accs)), np.linalg.norm(accs, axis = 1))
 plt.savefig(f"{name}_3.jpeg")
 plt.clf()
-plt.plot(np.mean(accs, axis = 1))
+plt.plot(np.linspace(0, iteration * timeDelta, len(accs)), np.linalg.norm(accs, axis = 1) * np.sign(np.mean(accs, axis = 1)))
 plt.savefig(f"{name}_4.jpeg")
 print("asd")

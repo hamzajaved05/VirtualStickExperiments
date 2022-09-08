@@ -27,6 +27,7 @@ __pycache__/
 *.so
 
 data/*
+imgs/*
 
 # Distribution / packaging
 .Python
